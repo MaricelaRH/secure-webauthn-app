@@ -42,21 +42,20 @@ Para que el sistema funcione correctamente, siga estos pasos de reconstrucción 
 
 ### 1. Preparar variables de entorno
 
-Cree un archivo .env en la raiz del proyecto y copie lo que esta en el documento del manual de despliegue:
+Cree un archivo .env en la raiz del proyecto y copie lo que esta en el documento del manual de despliegue (PASO 2):
 
 
 ### 2. Generar Certificados SSL Locales
 
 Como los certificados reales están excluidos por seguridad, genere sus propios archivos en la carpeta de Nginx:
 
-# Entrar a la carpeta de certificados
-cd nginx/certs
-
 # Generar llave y certificado auto-firmado
-openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365 -nodes -subj "/C=XX/ST=State/L=City/O=Company/OU=Unit/CN=localhost"
 
-# Volver a la raíz del proyecto
-cd ../..
+docker run --rm -v "${PWD}/nginx/certs:/certs" alpine sh -c "apk add --no-cache openssl && openssl req -x509 -newkey rsa:4096 -keyout /certs/key.pem -out /certs/cert.pem -sha256 -days 365 -nodes -subj '/C=XX/ST=State/L=City/O=Company/OU=Unit/CN=localhost'"
+
+
+Asegurese de que tenga docker ya instalado y de que al usar el comando le genere una carpeta "certs" dentro de la carpeta de nginx y que dentro de esta este los dos .pem
+
 
 ### Instrucciones de Despliegue
 
@@ -64,4 +63,42 @@ Levante el ecosistema completo con un solo comando:
 
 docker compose up --build
 
-Asegurese de que las tablas de la base de datos este creada (Todo esto en la guia de despliegue)
+### Base de Datos
+
+Asegurese de que las tablas de la base de datos este creada (Seguramente no este creada)
+
+Despues de crear el .env y haber colocado el contenido (Paso 2 de la guia de despliegue) coloque lo siguiente:
+
+docker exec -it webauthn-db psql -U webauthn_user -d webauthn_db
+
+luego creamos las tablas:
+
+CREATE TABLE session (
+  sid VARCHAR PRIMARY KEY,
+  sess JSON NOT NULL,
+  expire TIMESTAMP NOT NULL
+);
+
+
+CREATE TABLE users (
+    id UUID PRIMARY KEY,
+    username TEXT UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE webauthn_credentials (
+    id SERIAL PRIMARY KEY,
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    credential_id TEXT UNIQUE NOT NULL,
+    public_key TEXT NOT NULL,
+    counter BIGINT NOT NULL DEFAULT 0,
+    transports JSONB DEFAULT '[]',
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+para asegurar saldra la creacion de las 3 tablas en la consola
+
+\dt : comprobar que esten
+\q para salir
+
+Ya con esto podemos entrar a la pagina.
