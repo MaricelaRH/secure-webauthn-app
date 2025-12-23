@@ -18,7 +18,7 @@ Este proyecto consiste en un ecosistema web de alta seguridad que implementa aut
 
 ---
 
-## 🛠️ Stack Tecnológico
+## Stack Tecnológico
 
 El proyecto utiliza un stack moderno y seguro para mitigar las debilidades de los sistemas legacy:
 *   **Core de Autenticación:** `@simplewebauthn/server` & `@simplewebauthn/browser` (FIDO2/WebAuthn).
