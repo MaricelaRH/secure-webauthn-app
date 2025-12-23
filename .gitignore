@@ -1,0 +1,14 @@
+# Secretos 
+.env
+
+# Certificados SSL
+nginx/certs/*.pem
+nginx/certs/*.key
+
+# Dependencias (Se generan solas)
+node_modules/
+backend/node_modules/
+
+# Archivos temporales de Windows/Mac
+.DS_Store
+Thumbs.db

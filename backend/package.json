@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "@simplewebauthn/server": "^13.2.2",
+    "base64url": "^3.0.1",
+    "bcrypt": "^6.0.0",
+    "connect-pg-simple": "^10.0.0",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "express-session": "^1.18.2",
+    "helmet": "^7.0.0",
+    "pg": "^8.16.3",
+    "uuid": "^13.0.0"
+  },
+  "name": "secure-webauthn-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node backend/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module"
+}

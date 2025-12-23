@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Dashboard Seguro</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="protected-container">
+        <h1>Área protegida</h1>
+        <p>Bienvenido, <span id="user-name">Cargando...</span></p>
+        <p>Acceso concedido mediante WebAuthn</p>
+
+        <!-- Quitamos el onclick="" -->
+        <button id="btn-logout">Cerrar sesión</button>
+    </div>
+
+    <!-- Cargamos el script externo -->
+    <script src="dashboard.js"></script>
+</body>
+</html>
