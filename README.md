@@ -57,13 +57,13 @@ docker run --rm -v "${PWD}/nginx/certs:/certs" alpine sh -c "apk add --no-cache 
 Asegurese de que tenga docker ya instalado y de que al usar el comando le genere una carpeta "certs" dentro de la carpeta de nginx y que dentro de esta este los dos .pem
 
 
-### Instrucciones de Despliegue
+# Instrucciones de Despliegue
 
 Levante el ecosistema completo con un solo comando:
 
 docker compose up --build
 
-### Base de Datos
+# Base de Datos
 
 Asegurese de que las tablas de la base de datos este creada (Seguramente no este creada)
 
@@ -102,3 +102,7 @@ para asegurar saldra la creacion de las 3 tablas en la consola
 \q para salir
 
 Ya con esto podemos entrar a la pagina.
+
+# Uso del aplicativo
+
+En un navegador entrar a https://localhost
